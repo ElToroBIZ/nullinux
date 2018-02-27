@@ -252,6 +252,7 @@ def list_targets(t):
     hosts = []
     ip = re.compile("^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$")
     iprange = re.compile("^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\-\d{1,3}$")
+    dns = re.compile("^.+\.[a-z|A-Z]{2,}$")
     try:
         #txt File
         if t.endswith(".txt"):
@@ -259,7 +260,7 @@ def list_targets(t):
                 return [ip.strip() for ip in open(t)]
             else:
                 raise Exception("001: host file not found")
-        #multiple 127.0.0.1,yahoo.com
+        #multiple 10.0.0.1,10.0.0.2
         elif "," in t:
             for x in t.split(","):
                 hosts.append(x)
@@ -269,6 +270,9 @@ def list_targets(t):
             c = a.split(".")
             for x in range(int(c[2]), int(b)+1):
                 hosts.append(c[0]+"."+c[1]+"."+c[2]+"."+str(x))
+        # dns name
+        elif dns.match(t):
+            hosts.append(t)
         #Single IP match
         elif ip.match(t):
             hosts.append(t)
