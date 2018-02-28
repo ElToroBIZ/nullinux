@@ -124,7 +124,7 @@ class nullinux():
                 pass
 
     def enum_enumdomusers(self, target):
-        print("\n\033[1;34m[*]\033[1;m Enumerating enumdomusers for: ()".format(target))
+        print("\n\033[1;34m[*]\033[1;m Enumerating enumdomusers for: {}".format(target))
         cmd = "rpcclient -c enumdomusers -U {}%{} {}".format(self.username, self.password, target)
         for line in getoutput(cmd).splitlines():
             try:
